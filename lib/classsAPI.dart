@@ -13,7 +13,7 @@ class dataAPI {
 
   static Future<dataAPI> connectToAPI() async {
     // ignore: non_constant_identifier_names
-    String URLapi = 'https://reqres.in/api/users/2';
+    String URLapi = 'https://reqres.in/api/users/';
     var apiResult = await http.get(Uri.parse(URLapi));
 
     var jsonObject = json.decode(apiResult.body);

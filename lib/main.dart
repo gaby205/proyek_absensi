@@ -1,4 +1,6 @@
 import 'dart:collection';
+import 'dart:js';
+import 'beranda.dart';
 import 'classsAPI.dart';
 import 'package:flutter/material.dart';
 import 'mybutton.dart';
@@ -8,99 +10,95 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({ Key? key }) : super(key: key);
 
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  String nama = '';
-  TextEditingController controller = TextEditingController(text: 'NN');
-  int data = 0;
-  void press1() {
-    setState(() {
-      this.data = this.data + 1;
-    });
-  }
-
-  void press2() {
-    setState(() {
-      this.data = this.data + 3;
-    });
-  }
-
-  void getData() {
-    getNama().then((hsl) {
-      controller.text = hsl!;
-      setState(() {});
-    });
-
-    getDataint().then((hsl) {
-      this.data = hsl!;
-      setState(() {});
-    });
-  }
-
-  Future<int?> getDataint() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    return pref.getInt('keyData');
-  }
-
-  Future<String?> getNama() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    return pref.getString('keyNama');
-  }
-
-  void setData() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.setString('keyNama', controller.text);
-    pref.setInt('keyData', data);
-  }
-
-  dataAPI? user = null;
-  void getAPI() {
-    dataAPI.connectToAPI().then((hasil) {
-      user = hasil;
-      setState(() {
-        
-      });
-    });
-  }
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Custom Flutter"),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              TextField(controller: controller),
-              // Text((nama!='') ? nama : 'NN'),
-              Text(this.data.toString()),
-              MyButton('Button Pertama', pressButton: press1),
-              MyButton('Button Kedua', pressButton: press2),
-              MyButton('GET DATA', pressButton: getData),
-              MyButton('SET DATA', pressButton: setData),
-              ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      nama = '';
-                      controller = TextEditingController(text: 'NN');
-                      data = 0;
-                    });
-                  },
-                  child: Text('Clear')),
-              MyButton('AMBIL DATA API', pressButton: getAPI),
-              Text((user != null) ? user!.myemail : 'Kosong'),
-            ],
+        return MaterialApp(
+        initialRoute: '/',
+        routes: <String, WidgetBuilder>{
+          '/': (context) => Home(),
+          '/beranda': (context) => Beranda(),
+        }
+        );
+  }
+}
+
+///////////////////////////////// HOME ////////////////////////////////////
+
+
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  TextEditingController controller1 = TextEditingController();
+  TextEditingController controller2 = TextEditingController();
+  
+  @override
+  Widget build(BuildContext context) {
+   return Scaffold(
+      body: 
+      SafeArea(
+      child: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [Colors.lime.shade200, Colors.yellow.shade200])),
+        child: Center(
+          child: Container(
+            margin: EdgeInsets.all(50),
+            padding: EdgeInsets.all(20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text("GAMBAR LOGO APLIKASI"),
+                SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                    decoration: InputDecoration(
+                        labelText: "Username", hintText: "Username"),
+                    controller: controller1),
+                TextField(
+                    decoration: InputDecoration(
+                      labelText: "Password",
+                    ),
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    obscureText: true,
+                    controller: controller2),
+                SizedBox(
+                  height: 30,
+                  width: 30,
+                ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+
+                      ElevatedButton.icon(
+                        onPressed: (){
+                           Navigator.push(context, MaterialPageRoute(builder: (context) => Beranda()));
+                        },
+                        label: Text('LOGIN'),
+                        icon: Icon(Icons.login_rounded),
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.green[400],
+                            onPrimary: Colors.white),
+                      )
+                    ]),
+              ],
+            ),
           ),
         ),
       ),
-    );
+    )
+   );
   }
 }
+///////////////////////////////// END OF HOME ////////////////////////////////////
