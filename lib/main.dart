@@ -1,5 +1,5 @@
 import 'dart:collection';
-
+import 'classsAPI.dart';
 import 'package:flutter/material.dart';
 import 'mybutton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,7 +17,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String nama = '';
-  TextEditingController controller = TextEditingController(text:'NN');
+  TextEditingController controller = TextEditingController(text: 'NN');
   int data = 0;
   void press1() {
     setState(() {
@@ -37,11 +37,9 @@ class _MyAppState extends State<MyApp> {
       setState(() {});
     });
 
-    getDataint().then((hsl){
+    getDataint().then((hsl) {
       this.data = hsl!;
-      setState(() {
-        
-      });
+      setState(() {});
     });
   }
 
@@ -61,6 +59,15 @@ class _MyAppState extends State<MyApp> {
     pref.setInt('keyData', data);
   }
 
+  dataAPI? user = null;
+  void getAPI() {
+    dataAPI.connectToAPI().then((hasil) {
+      user = hasil;
+      setState(() {
+        
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -88,6 +95,8 @@ class _MyAppState extends State<MyApp> {
                     });
                   },
                   child: Text('Clear')),
+              MyButton('AMBIL DATA API', pressButton: getAPI),
+              Text((user != null) ? user!.myemail : 'Kosong'),
             ],
           ),
         ),
