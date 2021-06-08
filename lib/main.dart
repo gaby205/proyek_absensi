@@ -1,7 +1,12 @@
 import 'dart:collection';
 import 'dart:js';
+import 'package:tgs3_flutter/absensi.dart';
+import 'package:tgs3_flutter/daftar.dart';
+import 'package:tgs3_flutter/kegiatan.dart';
+import 'package:tgs3_flutter/pelayanan.dart';
+
 import 'beranda.dart';
-import 'classsAPI.dart';
+import 'userdataAPI.dart';
 import 'package:flutter/material.dart';
 import 'mybutton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,6 +25,10 @@ class MyApp extends StatelessWidget {
         routes: <String, WidgetBuilder>{
           '/': (context) => Home(),
           '/beranda': (context) => Beranda(),
+          '/absensi': (context) => Absensi(),
+          '/pelayanan': (context) => JPelayanan(),
+          '/kegiatan': (context) => Kegiatan(),
+          '/daftar': (context) => Daftar(),
         }
         );
   }

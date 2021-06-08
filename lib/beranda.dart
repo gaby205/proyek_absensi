@@ -11,9 +11,17 @@ class Beranda extends StatefulWidget {
 class _BerandaState extends State<Beranda> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        child: Column(children: <Widget>[
+    return Container(
+         decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [Colors.lime.shade200, Colors.yellow.shade200])),
+        child: Center(
+          child :Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+          
           ElevatedButton.icon(
             onPressed: () {
               Navigator.pushReplacementNamed(context, '/absensi');
@@ -25,7 +33,7 @@ class _BerandaState extends State<Beranda> {
           ),
           ElevatedButton.icon(
             onPressed: () {
-             Navigator.pushReplacementNamed(context, '/JadwalPel');
+             Navigator.pushReplacementNamed(context, '/pelayanan');
             },
             label: Text('Jadwal Pelayanan'),
             icon: Icon(Icons.schedule_sharp),
@@ -34,7 +42,7 @@ class _BerandaState extends State<Beranda> {
           ),
           ElevatedButton.icon(
             onPressed: () {
-              Navigator.pushReplacementNamed(context, '/JadwalKeg');
+              Navigator.pushReplacementNamed(context, '/kegiatan');
             },
             label: Text('Jadwal Kegiatan'),
             icon: Icon(Icons.calendar_today_outlined),
